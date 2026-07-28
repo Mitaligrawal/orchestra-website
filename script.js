@@ -31,71 +31,33 @@ mobile?.querySelectorAll("a").forEach((link) => {
   });
 });
 
-// ---------------------------------------------------------------------------
-// Early access signup
-//
-// Formspree takes the submission and emails it to you — no backend needed.
-// ---------------------------------------------------------------------------
-const FORM_ENDPOINT = "https://formspree.io/f/xwvgylkg";
-
 /** When signups close. Also stated in the markup, so keep the two in step. */
 const DEADLINE = new Date("2026-08-03T23:59:59");
 
-const signup = document.querySelector("#signup");
-const status = document.querySelector(".signup-status");
+// ---------------------------------------------------------------------------
+// User count
+//
+// There is no backend to poll, so the real number is the one written into the
+// markup — edit it there. This only counts up to whatever it already says.
+// ---------------------------------------------------------------------------
+const usercount = document.querySelector("[data-usercount]");
+const target = Number(usercount?.textContent.replace(/\D/g, ""));
 
-function say(message, state) {
-  if (!status) return;
-  status.textContent = message;
-  status.dataset.state = state;
-  status.hidden = false;
+if (usercount && target > 0 && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  const DURATION = 900;
+  let start;
+
+  const step = (now) => {
+    start ??= now;
+    const t = Math.min((now - start) / DURATION, 1);
+    // Ease out, so it decelerates into the final number instead of snapping.
+    const value = Math.round(target * (1 - Math.pow(1 - t, 3)));
+    usercount.textContent = value.toLocaleString();
+    if (t < 1) requestAnimationFrame(step);
+  };
+
+  requestAnimationFrame(step);
 }
-
-signup?.addEventListener("submit", async (event) => {
-  event.preventDefault();
-  if (signup.hasAttribute("data-busy")) return;
-
-  const input = signup.querySelector("input[name='email']");
-  const email = input?.value.trim() ?? "";
-
-  // `novalidate` turns off the browser bubble so the message lands in the same
-  // place as every other one.
-  if (!input?.checkValidity() || !email) {
-    say("Enter an email address we can send the download link to.", "error");
-    input?.focus();
-    return;
-  }
-
-  signup.setAttribute("data-busy", "");
-  say("Sending…", "pending");
-
-  try {
-    const payload = new URLSearchParams();
-    payload.set("email", email);
-    payload.set("_subject", "Orchestra early access signup");
-
-    const res = await fetch(FORM_ENDPOINT, {
-      method: "POST",
-      headers: {
-        "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
-        accept: "application/json",
-      },
-      body: payload.toString(),
-    });
-
-    if (!res.ok) {
-      say("That did not go through. Try again in a moment.", "error");
-      return;
-    }
-
-    signup.reset();
-    say(`You're on the list. Your download link is on its way to ${email}.`, "ok");
-  } catch {
-    say("That did not go through. Try again, or email us and we'll add you by hand.", "error");
-  } finally {
-    signup.removeAttribute("data-busy");
-  }
-});
 
 // ---------------------------------------------------------------------------
 // Download counter
