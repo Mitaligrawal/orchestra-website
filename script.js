@@ -34,17 +34,9 @@ mobile?.querySelectorAll("a").forEach((link) => {
 // ---------------------------------------------------------------------------
 // Early access signup
 //
-// Web3Forms takes the submission and emails it to you — no backend, no account.
-// Get a key at https://web3forms.com (it arrives by email) and paste it below.
-//
-// PASTE YOUR ACCESS KEY. Until you do, the form refuses to submit and says so,
-// rather than posting signups into the void.
-//
-// Those emails are the durable copy: on the free plan Web3Forms keeps
-// submissions for 30 days and offers no CSV export. Don't delete them.
+// Formspree takes the submission and emails it to you — no backend needed.
 // ---------------------------------------------------------------------------
-const ACCESS_KEY = "PASTE-YOUR-WEB3FORMS-KEY";
-const FORM_ENDPOINT = "https://api.web3forms.com/submit";
+const FORM_ENDPOINT = "https://formspree.io/f/xwvgylkg";
 
 /** When signups close. Also stated in the markup, so keep the two in step. */
 const DEADLINE = new Date("2026-08-03T23:59:59");
@@ -74,32 +66,25 @@ signup?.addEventListener("submit", async (event) => {
     return;
   }
 
-  if (ACCESS_KEY.startsWith("PASTE-")) {
-    say("Signups are not wired up yet — set ACCESS_KEY in script.js.", "error");
-    console.warn("script.js: ACCESS_KEY is still the placeholder; nothing was sent.");
-    return;
-  }
-
   signup.setAttribute("data-busy", "");
   say("Sending…", "pending");
 
   try {
+    const payload = new URLSearchParams();
+    payload.set("email", email);
+    payload.set("_subject", "Orchestra early access signup");
+
     const res = await fetch(FORM_ENDPOINT, {
       method: "POST",
-      headers: { "content-type": "application/json", accept: "application/json" },
-      body: JSON.stringify({
-        access_key: ACCESS_KEY,
-        email,
-        source: "early-access",
-        subject: "Orchestra early access signup",
-      }),
+      headers: {
+        "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+        accept: "application/json",
+      },
+      body: payload.toString(),
     });
-    // Web3Forms answers 200 with { success: false, message } for a bad key, so
-    // the body decides, not the status.
-    const data = await res.json().catch(() => ({}));
 
-    if (!res.ok || !data.success) {
-      say(data.message ?? "That did not go through. Try again in a moment.", "error");
+    if (!res.ok) {
+      say("That did not go through. Try again in a moment.", "error");
       return;
     }
 
