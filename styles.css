@@ -890,24 +890,12 @@ code {
 }
 
 .footer-bottom {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px 20px;
-  justify-content: space-between;
   max-width: 1120px;
   margin: 0 auto;
   padding-top: 24px;
   border-top: 1px solid var(--line);
   font-size: 13px;
   color: var(--faint);
-}
-
-.footer-bottom a {
-  color: inherit;
-}
-
-.footer-bottom a:hover {
-  color: var(--ink);
 }
 
 /* Reveal */
