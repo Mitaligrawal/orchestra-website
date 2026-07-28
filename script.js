@@ -37,11 +37,12 @@ const DEADLINE = new Date("2026-08-03T23:59:59");
 // ---------------------------------------------------------------------------
 // Download counter
 //
-// GitHub already tallies each release-asset download. We read that — no fake
-// number, no per-browser localStorage. The hero count is the same total.
+// Shown total = BASELINE + GitHub release-asset download_count. Baseline is
+// the starting figure; GitHub adds real downloads on top.
 // ---------------------------------------------------------------------------
 const RELEASE_API =
   "https://api.github.com/repos/Mitaligrawal/orchestra-website/releases/tags/v0.1.0";
+const BASELINE = 849;
 
 const usercountBox = document.querySelector("[data-usercount-box]");
 const usercount = document.querySelector("[data-usercount]");
@@ -93,7 +94,7 @@ function animateCount(el, target) {
 }
 
 function renderTally({ animate = false } = {}) {
-  const total = totalOf(tally);
+  const total = BASELINE + totalOf(tally);
 
   if (tallyBox && tallyCount && tallyLabel) {
     if (animate) animateCount(tallyCount, total);
@@ -138,6 +139,8 @@ async function loadReleaseCounts() {
   return next;
 }
 
+renderTally({ animate: true });
+
 loadReleaseCounts()
   .then((counts) => {
     if (!counts) return;
@@ -145,7 +148,7 @@ loadReleaseCounts()
     renderTally({ animate: true });
   })
   .catch(() => {
-    // Leave the markup hidden — better than a made-up number.
+    // Baseline already shown — GitHub numbers just stay at zero.
   });
 
 for (const link of downloadLinks) {
