@@ -1,0 +1,47 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <!-- Source for build/icon.png. macOS Big Sur grid: an 824x824 rounded body
+       centred in a 1024 canvas, so the 100px margin is the shadow gutter.
+       The glyph is one trunk fanning into three branches — the conductor's
+       fan and a git worktree split read as the same shape. -->
+  <defs>
+    <linearGradient id="body" x1="512" y1="100" x2="512" y2="924" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#20222b"/>
+      <stop offset="1" stop-color="#0a0a0b"/>
+    </linearGradient>
+
+    <radialGradient id="sheen" cx="330" cy="270" r="620" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.10"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+
+    <linearGradient id="strand" x1="300" y1="512" x2="740" y2="512" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffc46b"/>
+      <stop offset="1" stop-color="#ff6f4d"/>
+    </linearGradient>
+
+    <clipPath id="bodyClip">
+      <rect x="100" y="100" width="824" height="824" rx="185" ry="185"/>
+    </clipPath>
+  </defs>
+
+  <rect x="100" y="100" width="824" height="824" rx="185" ry="185" fill="url(#body)"/>
+  <rect x="100" y="100" width="824" height="824" rx="185" ry="185" fill="url(#sheen)" clip-path="url(#bodyClip)"/>
+
+  <g fill="none" stroke="url(#strand)" stroke-width="56" stroke-linecap="round">
+    <path d="M320 512 C 470 512, 520 296, 704 296"/>
+    <path d="M320 512 H 704"/>
+    <path d="M320 512 C 470 512, 520 728, 704 728"/>
+  </g>
+
+  <g fill="url(#strand)">
+    <circle cx="704" cy="296" r="58"/>
+    <circle cx="704" cy="512" r="58"/>
+    <circle cx="704" cy="728" r="58"/>
+  </g>
+
+  <circle cx="320" cy="512" r="86" fill="#fff3e2"/>
+
+  <!-- Hairline keeps the body from dissolving into a dark desktop. -->
+  <rect x="102" y="102" width="820" height="820" rx="184" ry="184"
+        fill="none" stroke="#ffffff" stroke-opacity="0.10" stroke-width="4"/>
+</svg>

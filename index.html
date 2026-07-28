@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Orchestra — Run Claude Code across parallel agents</title>
+    <meta
+      name="description"
+      content="Orchestra plans your objective, spawns sub-agents in git worktrees, and opens PRs — through your local Claude Code."
+    />
+    <link rel="icon" href="icon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+
+    <header class="nav">
+      <div class="nav-inner">
+        <a class="logo" href="#top" aria-label="Orchestra home">
+          <img src="icon.svg" alt="" width="22" height="22" />
+          <span>Orchestra</span>
+        </a>
+        <nav class="nav-links" aria-label="Primary">
+          <a href="#product">Product</a>
+          <a href="#how">How it works</a>
+          <a href="#access">Early access</a>
+        </nav>
+        <div class="nav-actions">
+          <a class="btn btn-ghost" href="#how">Get started</a>
+          <a class="btn btn-solid" href="#access">Request access</a>
+        </div>
+        <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false">
+          <span></span><span></span>
+        </button>
+      </div>
+      <div class="nav-mobile" hidden>
+        <a href="#product">Product</a>
+        <a href="#how">How it works</a>
+        <a href="#access">Early access</a>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="hero" id="top">
+        <p class="eyebrow">
+          <span class="dot" aria-hidden="true"></span>
+          Early access · closes <time datetime="2026-08-03">August 3</time>
+        </p>
+        <h1>Orchestra is your coding agent desk for ambitious software.</h1>
+        <p class="hero-sub">
+          Point it at a repo, state an objective, and run the planner. Sub-agents
+          work in isolated git worktrees through your local Claude Code — you
+          approve every shell command.
+        </p>
+        <div class="hero-ctas">
+          <a class="btn btn-solid btn-lg" href="#access">
+            Request early access
+            <span class="btn-icon" aria-hidden="true">→</span>
+          </a>
+          <a class="btn btn-ghost btn-lg" href="#how">How it works →</a>
+        </div>
+
+        <figure class="shot-frame hero-shot">
+          <img
+            src="hero-stripe.png"
+            srcset="hero-stripe.png 2868w"
+            sizes="(max-width: 1120px) calc(100vw - 48px), 1352px"
+            alt="Orchestra run view — multi-tenant Stripe billing PR ready to merge"
+            width="2868"
+            height="1566"
+            decoding="async"
+            fetchpriority="high"
+          />
+        </figure>
+      </section>
+
+      <section class="trust">
+        <p>Runs through your local Claude Code — no API key needed.</p>
+        <div class="trust-row">
+          <span>opus / sonnet</span>
+          <span>effort controls</span>
+          <span>git worktrees</span>
+          <span>shell approvals</span>
+          <span>pull requests</span>
+          <span>token + cost</span>
+        </div>
+      </section>
+
+      <section class="feature" id="product">
+        <div class="feature-copy">
+          <h2>Set the objective. Run the planner.</h2>
+          <p>
+            Choose a repository, describe what the agents should build, pick
+            model and effort, then hit Run planner. The planner reads the repo
+            and splits work across agents only when it is genuinely parallel —
+            otherwise one agent does it.
+          </p>
+          <a class="text-link" href="#how">See the setup flow →</a>
+        </div>
+        <figure class="shot-frame feature-shot">
+          <img
+            src="setup.png"
+            srcset="setup.png 2868w"
+            sizes="(max-width: 1120px) calc(100vw - 48px), 560px"
+            alt="Orchestra setup: choose a repository, write an objective, pick model and effort"
+            width="2868"
+            height="1544"
+            loading="lazy"
+            decoding="async"
+          />
+        </figure>
+      </section>
+
+      <section class="feature feature-flip">
+        <div class="feature-copy">
+          <h2>Watch planner, sub-agents, and PRs</h2>
+          <p>
+            The run desk shows the planner stream, live sub-agents, and pull
+            requests as work finishes. Track tokens and cost, stop or reset a
+            run, and approve shell commands before they execute.
+          </p>
+          <a class="text-link" href="#access">Request early access →</a>
+        </div>
+        <figure class="shot-frame feature-shot">
+          <img
+            src="hero-stripe.png"
+            srcset="hero-stripe.png 2868w"
+            sizes="(max-width: 1120px) calc(100vw - 48px), 560px"
+            alt="Orchestra with a finished Stripe billing PR ready to merge"
+            width="2868"
+            height="1566"
+            loading="lazy"
+            decoding="async"
+          />
+        </figure>
+      </section>
+
+      <section class="feature">
+        <div class="feature-copy">
+          <h2>Isolated worktrees. You merge.</h2>
+          <p>
+            Each agent writes real files on its own branch in its own git
+            worktree. Nothing reaches your branch until you merge. PRs appear
+            in Orchestra as sub-agents finish their work.
+          </p>
+        </div>
+        <div class="feature-points">
+          <div>
+            <h3>Human in the loop</h3>
+            <p>Every shell command asks for approval before it runs.</p>
+          </div>
+          <div>
+            <h3>Your Claude Code</h3>
+            <p>Opus or Sonnet, effort from low to max — via the CLI you already use.</p>
+          </div>
+          <div>
+            <h3>Live observability</h3>
+            <p>See agents working, token usage, and spend while the run is live.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="how" id="how">
+        <h2>Three steps to a run.</h2>
+        <ol class="how-grid">
+          <li>
+            <span>01</span>
+            <h3>Choose a repository</h3>
+            <p>Browse or open any local git repo. Orchestra works on real files in worktrees.</p>
+          </li>
+          <li>
+            <span>02</span>
+            <h3>Say what agents should build</h3>
+            <p>Write the objective, pick opus or sonnet, set effort, then run the planner.</p>
+          </li>
+          <li>
+            <span>03</span>
+            <h3>Approve, review, merge</h3>
+            <p>Approve shell prompts, watch sub-agents, then merge PRs when you are ready.</p>
+          </li>
+        </ol>
+        <div class="req">
+          <p>
+            Requires <strong>Claude Code CLI</strong> (logged in) and
+            <strong>git</strong>. Orchestra does not bundle a Claude subscription —
+            it drives the <code>claude</code> already on your PATH.
+          </p>
+        </div>
+      </section>
+
+      <section class="frontier">
+        <h2>Built for how agents actually ship code.</h2>
+        <div class="cards">
+          <article>
+            <h3>Smart splitting</h3>
+            <p>Parallel only when the work splits cleanly. Otherwise one agent owns the objective.</p>
+          </article>
+          <article>
+            <h3>Safe by default</h3>
+            <p>Worktrees, branches, and explicit approvals keep your main tree intact.</p>
+          </article>
+          <article>
+            <h3>Desktop-native</h3>
+            <p>macOS app with its own runtime. Node.js is not required on your machine.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="final" id="access">
+        <p class="eyebrow">
+          <span class="dot" aria-hidden="true"></span>
+          <span data-deadline-countdown>Closes <time datetime="2026-08-03">August 3</time></span>
+        </p>
+        <h2>Early access is open for one week.</h2>
+        <p class="final-lede">
+          Orchestra is going out to early users only. Sign up before
+          <time datetime="2026-08-03">Monday, August 3</time> and we will email you
+          the download link.
+        </p>
+
+        <form class="signup" id="signup" novalidate>
+          <label class="sr-only" for="signup-email">Email address</label>
+          <input
+            id="signup-email"
+            name="email"
+            type="email"
+            inputmode="email"
+            autocomplete="email"
+            placeholder="you@company.com"
+            required
+          />
+          <button class="btn btn-solid btn-lg" type="submit" data-submit>
+            Request access
+            <span class="btn-icon" aria-hidden="true">→</span>
+          </button>
+        </form>
+        <p class="signup-status" role="status" aria-live="polite" hidden></p>
+
+        <p class="final-note">
+          macOS, Apple Silicon and Intel. Requires the Claude Code CLI and git —
+          Orchestra drives the <code>claude</code> already on your PATH. One email
+          with your link, nothing else.
+        </p>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-top">
+        <div class="logo">
+          <img src="icon.svg" alt="" width="20" height="20" />
+          <span>Orchestra</span>
+        </div>
+        <p>
+          Plan objectives, spawn sub-agents in git worktrees, and merge PRs —
+          through your local Claude Code.
+        </p>
+      </div>
+      <div class="footer-cols">
+        <div>
+          <h4>Product</h4>
+          <a href="#product">Planner</a>
+          <a href="#how">How it works</a>
+          <a href="#access">Early access</a>
+        </div>
+        <div>
+          <h4>Requirements</h4>
+          <a href="https://claude.com/claude-code" target="_blank" rel="noopener">Claude Code</a>
+          <a href="https://git-scm.com" target="_blank" rel="noopener">git</a>
+        </div>
+        <div>
+          <h4>Get Orchestra</h4>
+          <a href="#access">Request access</a>
+          <span class="footer-note">Signups close August 3, 2026</span>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 Orchestra</span>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
