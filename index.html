@@ -29,11 +29,18 @@
         <nav class="nav-links" aria-label="Primary">
           <a href="#product">Product</a>
           <a href="#how">How it works</a>
+          <a href="#downloads">Downloads</a>
           <a href="#access">Early access</a>
         </nav>
         <div class="nav-actions">
-          <a class="btn btn-ghost" href="#how">Get started</a>
-          <a class="btn btn-solid" href="#access">Request access</a>
+          <a
+            class="btn btn-ghost"
+            href="https://github.com/Mitaligrawal/orchestra"
+            target="_blank"
+            rel="noopener"
+            >Source</a
+          >
+          <a class="btn btn-solid" href="#downloads">Download app</a>
         </div>
         <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false">
           <span></span><span></span>
@@ -42,6 +49,7 @@
       <div class="nav-mobile" hidden>
         <a href="#product">Product</a>
         <a href="#how">How it works</a>
+        <a href="#downloads">Downloads</a>
         <a href="#access">Early access</a>
       </div>
     </header>
@@ -59,8 +67,8 @@
           approve every shell command.
         </p>
         <div class="hero-ctas">
-          <a class="btn btn-solid btn-lg" href="#access">
-            Request early access
+          <a class="btn btn-solid btn-lg" href="#downloads">
+            Download desktop app
             <span class="btn-icon" aria-hidden="true">→</span>
           </a>
           <a class="btn btn-ghost btn-lg" href="#how">How it works →</a>
@@ -81,7 +89,10 @@
       </section>
 
       <section class="trust">
-        <p>Runs through your local Claude Code — no API key needed.</p>
+        <p>
+          Open source and MIT licensed. Runs through your local Claude Code —
+          no API key needed.
+        </p>
         <div class="trust-row">
           <span>opus / sonnet</span>
           <span>effort controls</span>
@@ -212,6 +223,83 @@
         </div>
       </section>
 
+      <section class="downloads" id="downloads">
+        <div class="downloads-copy">
+          <p class="eyebrow">
+            <span class="dot" aria-hidden="true"></span>
+            Desktop builds
+          </p>
+          <h2>Download Orchestra for your machine.</h2>
+          <p>
+            Pick the build for your platform. Orchestra runs as a desktop app,
+            but still requires the Claude Code CLI and <code>git</code> on your
+            machine.
+          </p>
+          <p class="download-tally" data-tally hidden>
+            <span class="tally-count" data-tally-count>0</span>
+            <span class="tally-label" data-tally-label>downloads from this browser</span>
+          </p>
+        </div>
+        <div class="download-grid">
+          <article class="download-card">
+            <h3>macOS Apple Silicon</h3>
+            <p>Signed or notarized builds are not set up yet, so Gatekeeper may warn on first open.</p>
+            <a
+              class="btn btn-solid btn-lg"
+              href="https://github.com/Mitaligrawal/orchestra-website/releases/download/v0.1.0/Orchestra-0.1.0-arm64.dmg"
+              data-download="mac-arm64"
+            >
+              Download .dmg
+              <span class="btn-meta">613&nbsp;MB</span>
+            </a>
+            <p class="card-tally" data-card-tally="mac-arm64" hidden></p>
+          </article>
+          <article class="download-card">
+            <h3>macOS Intel</h3>
+            <p>Use this build on Intel Macs. It includes the full desktop runtime.</p>
+            <a
+              class="btn btn-solid btn-lg"
+              href="https://github.com/Mitaligrawal/orchestra-website/releases/download/v0.1.0/Orchestra-0.1.0-x64.dmg"
+              data-download="mac-x64"
+            >
+              Download .dmg
+              <span class="btn-meta">615&nbsp;MB</span>
+            </a>
+            <p class="card-tally" data-card-tally="mac-x64" hidden></p>
+          </article>
+          <article class="download-card">
+            <h3>Build from source</h3>
+            <p>Orchestra is MIT licensed. Clone it, run <code>pnpm app</code>, or package your own DMG.</p>
+            <a
+              class="btn btn-ghost btn-lg"
+              href="https://github.com/Mitaligrawal/orchestra"
+              target="_blank"
+              rel="noopener"
+            >
+              View on GitHub
+            </a>
+          </article>
+          <article class="download-card">
+            <h3>Windows</h3>
+            <p>Coming soon — Windows builds are not published on this page yet.</p>
+            <span class="btn btn-ghost btn-lg" aria-disabled="true">Coming soon</span>
+          </article>
+          <article class="download-card">
+            <h3>Linux</h3>
+            <p>Coming soon — Linux builds are not published on this page yet.</p>
+            <span class="btn btn-ghost btn-lg" aria-disabled="true">Coming soon</span>
+          </article>
+        </div>
+        <div class="req download-note">
+          <p>
+            First open: the builds are not notarized yet, so macOS will refuse a
+            double-click. Right-click the app and choose <strong>Open</strong>, or
+            clear the quarantine flag —
+            <code>xattr -dr com.apple.quarantine /Applications/Orchestra.app</code>
+          </p>
+        </div>
+      </section>
+
       <section class="final" id="access">
         <p class="eyebrow">
           <span class="dot" aria-hidden="true"></span>
@@ -266,6 +354,7 @@
           <h4>Product</h4>
           <a href="#product">Planner</a>
           <a href="#how">How it works</a>
+          <a href="#downloads">Downloads</a>
           <a href="#access">Early access</a>
         </div>
         <div>
@@ -275,12 +364,17 @@
         </div>
         <div>
           <h4>Get Orchestra</h4>
-          <a href="#access">Request access</a>
-          <span class="footer-note">Signups close August 3, 2026</span>
+          <a href="#downloads">Download app</a>
+          <a href="https://github.com/Mitaligrawal/orchestra" target="_blank" rel="noopener">Source on GitHub</a>
+          <a href="https://github.com/Mitaligrawal/orchestra-website/releases/latest" target="_blank" rel="noopener">All releases</a>
+          <span class="footer-note">macOS builds available; Windows/Linux coming soon</span>
         </div>
       </div>
       <div class="footer-bottom">
         <span>© 2026 Orchestra</span>
+        <span>
+          <a href="https://github.com/Mitaligrawal/orchestra/blob/main/LICENSE" target="_blank" rel="noopener">MIT licensed</a>
+        </span>
       </div>
     </footer>
 

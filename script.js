@@ -97,6 +97,94 @@ signup?.addEventListener("submit", async (event) => {
   }
 });
 
+// ---------------------------------------------------------------------------
+// Download counter
+//
+// Counts locally, in this browser only — there is no backend to aggregate
+// across visitors, so the label says so rather than implying a global total.
+// ---------------------------------------------------------------------------
+const TALLY_KEY = "orchestra:downloads";
+
+/** Reads the tally, tolerating a cleared, corrupt, or blocked localStorage. */
+function readTally() {
+  try {
+    const raw = localStorage.getItem(TALLY_KEY);
+    const parsed = raw ? JSON.parse(raw) : null;
+    return parsed && typeof parsed === "object" ? parsed : {};
+  } catch {
+    return {};
+  }
+}
+
+function writeTally(tally) {
+  try {
+    localStorage.setItem(TALLY_KEY, JSON.stringify(tally));
+  } catch {
+    // Private browsing or a full quota — the number still shows for this page
+    // view, it just will not survive a reload.
+  }
+}
+
+const tallyBox = document.querySelector("[data-tally]");
+const tallyCount = document.querySelector("[data-tally-count]");
+const tallyLabel = document.querySelector("[data-tally-label]");
+const downloadLinks = document.querySelectorAll("[data-download]");
+
+let tally = readTally();
+
+function renderTally() {
+  const total = Object.values(tally).reduce(
+    (sum, n) => sum + (Number.isFinite(n) ? n : 0),
+    0
+  );
+
+  if (tallyBox && tallyCount && tallyLabel) {
+    tallyCount.textContent = String(total);
+    tallyLabel.textContent =
+      total === 1
+        ? "download from this browser"
+        : "downloads from this browser";
+    tallyBox.hidden = total === 0;
+  }
+
+  for (const link of downloadLinks) {
+    const id = link.dataset.download;
+    const note = document.querySelector(`[data-card-tally="${id}"]`);
+    if (!note) continue;
+    const count = tally[id] ?? 0;
+    note.textContent = count === 1 ? "Downloaded once" : `Downloaded ${count} times`;
+    note.hidden = count === 0;
+  }
+}
+
+for (const link of downloadLinks) {
+  link.addEventListener("click", () => {
+    const id = link.dataset.download;
+    if (!id) return;
+
+    // Re-read first: another tab may have counted a download since this page
+    // loaded, and a blind write would drop it.
+    tally = readTally();
+    tally[id] = (tally[id] ?? 0) + 1;
+    writeTally(tally);
+    renderTally();
+
+    tallyBox?.classList.remove("bump");
+    // Restart the animation rather than letting a rapid second click skip it.
+    void tallyBox?.offsetWidth;
+    tallyBox?.classList.add("bump");
+  });
+}
+
+renderTally();
+
+// Keep two open tabs in step.
+window.addEventListener("storage", (event) => {
+  if (event.key !== TALLY_KEY) return;
+  tally = readTally();
+  renderTally();
+});
+
 // Turns the static date into a countdown, but only while one is true — a stale
 // page should fall back to the plain date in the markup, never show "-3 days".
 const countdown = document.querySelector("[data-deadline-countdown]");
