@@ -696,8 +696,10 @@ code {
 
 /* The class sets `display`, so it would otherwise beat the UA rule for
    `[hidden]` and show a "0 downloads" pill on a first visit. */
-.downloads-copy .download-tally[hidden] {
-  display: none;
+.usercount[hidden],
+.downloads-copy .download-tally[hidden],
+.download-card .card-tally[hidden] {
+  display: none !important;
 }
 
 .tally-count {

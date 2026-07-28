@@ -74,7 +74,11 @@ function totalOf(counts) {
 
 function animateCount(el, target) {
   if (!el) return;
-  if (matchMedia("(prefers-reduced-motion: reduce)").matches || target <= 0) {
+  const from = Number(String(el.textContent).replace(/\D/g, "")) || 0;
+  if (
+    matchMedia("(prefers-reduced-motion: reduce)").matches ||
+    target === from
+  ) {
     el.textContent = target.toLocaleString();
     return;
   }
@@ -85,7 +89,7 @@ function animateCount(el, target) {
   const step = (now) => {
     start ??= now;
     const t = Math.min((now - start) / DURATION, 1);
-    const value = Math.round(target * (1 - Math.pow(1 - t, 3)));
+    const value = Math.round(from + (target - from) * (1 - Math.pow(1 - t, 3)));
     el.textContent = value.toLocaleString();
     if (t < 1) requestAnimationFrame(step);
   };
@@ -115,9 +119,14 @@ function renderTally({ animate = false } = {}) {
     const note = document.querySelector(`[data-card-tally="${id}"]`);
     if (!note) continue;
     const count = tally[id] ?? 0;
+    if (count === 0) {
+      note.textContent = "";
+      note.hidden = true;
+      continue;
+    }
     note.textContent =
       count === 1 ? "1 download" : `${count.toLocaleString()} downloads`;
-    note.hidden = count === 0;
+    note.hidden = false;
   }
 }
 
