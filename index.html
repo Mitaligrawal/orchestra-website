@@ -3,6 +3,12 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- The download gate is script-driven, so it only applies where script
+         runs. Without this class the CSS leaves the builds visible rather than
+         hiding them behind a form that can never be submitted. -->
+    <script>
+      document.documentElement.classList.add("js");
+    </script>
     <title>Orchestra — Run Claude Code across parallel agents</title>
     <meta
       name="description"
@@ -219,7 +225,9 @@
         </div>
       </section>
 
-      <section class="downloads" id="downloads">
+      <!-- data-gated is in the markup, not added by script, so the builds are
+           never visible for a frame before the gate covers them. -->
+      <section class="downloads" id="downloads" data-gated>
         <div class="downloads-copy">
           <p class="eyebrow">
             <span class="dot" aria-hidden="true"></span>
@@ -236,6 +244,29 @@
             <span class="tally-label" data-tally-label>downloads</span>
           </p>
         </div>
+
+        <form class="gate" id="download-gate" novalidate>
+          <label class="sr-only" for="gate-email">Email address</label>
+          <input
+            id="gate-email"
+            name="email"
+            type="email"
+            inputmode="email"
+            autocomplete="email"
+            placeholder="you@company.com"
+            required
+          />
+          <button class="btn btn-solid btn-lg" type="submit" data-submit>
+            Get the download
+            <span class="btn-icon" aria-hidden="true">→</span>
+          </button>
+        </form>
+        <p class="gate-status" role="status" aria-live="polite" hidden></p>
+        <p class="gate-note">
+          Tell us where to reach you and the builds appear right here. One email so we
+          can tell you about updates and fixes — nothing else.
+        </p>
+
         <div class="download-grid">
           <article class="download-card">
             <h3>macOS Apple Silicon</h3>
@@ -339,6 +370,6 @@
       </div>
     </footer>
 
-    <script src="script.js?v=849"></script>
+    <script src="script.js?v=gate1"></script>
   </body>
 </html>

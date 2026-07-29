@@ -31,6 +31,106 @@ mobile?.querySelectorAll("a").forEach((link) => {
   });
 });
 
+// ---------------------------------------------------------------------------
+// Download gate
+//
+// The builds are behind an address. Formspree takes the submission and emails
+// it on — no backend, no account key in this file.
+//
+// Worth being clear-eyed about what this is: the .dmg URLs are public GitHub
+// release assets, so anyone who goes looking can reach them without the form.
+// This captures the addresses of people who are not trying to dodge it, which
+// is what a gate on a static page can honestly do.
+// ---------------------------------------------------------------------------
+const FORM_ENDPOINT = "https://formspree.io/f/xwvgylkg";
+
+/** Remembers a visitor who has already given an address, so it asks once. */
+const GATE_KEY = "orchestra:download-access";
+
+const downloads = document.querySelector("#downloads");
+const gate = document.querySelector("#download-gate");
+const gateStatus = document.querySelector(".gate-status");
+
+function gateSay(message, state) {
+  if (!gateStatus) return;
+  gateStatus.textContent = message;
+  gateStatus.dataset.state = state;
+  gateStatus.hidden = false;
+}
+
+/** Drops the gate and puts the builds on screen. */
+function openDownloads(announce) {
+  downloads?.removeAttribute("data-gated");
+  if (!announce) return;
+  // Land them on the buttons they came for rather than leaving them to scroll.
+  downloads?.querySelector(".download-grid .btn")?.focus({ preventScroll: true });
+  downloads?.querySelector(".download-grid")?.scrollIntoView({
+    behavior: "smooth",
+    block: "nearest",
+  });
+}
+
+// A returning visitor has already paid the toll.
+try {
+  if (localStorage.getItem(GATE_KEY)) openDownloads(false);
+} catch {
+  // Private browsing can refuse storage; the form still works, it just asks again.
+}
+
+gate?.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  if (gate.hasAttribute("data-busy")) return;
+
+  const input = gate.querySelector("input[name='email']");
+  const email = input?.value.trim() ?? "";
+
+  // `novalidate` turns off the browser bubble so the message lands in the same
+  // place as every other one.
+  if (!input?.checkValidity() || !email) {
+    gateSay("Enter an email address so we can send you updates.", "error");
+    input?.focus();
+    return;
+  }
+
+  gate.setAttribute("data-busy", "");
+  gateSay("One moment…", "pending");
+
+  try {
+    // Formspree expects standard form fields (URL-encoded), not JSON.
+    const payload = new URLSearchParams();
+    payload.set("email", email);
+    payload.set("source", "download-gate");
+    payload.set("_subject", "Orchestra download");
+
+    const res = await fetch(FORM_ENDPOINT, {
+      method: "POST",
+      headers: {
+        "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+        accept: "application/json",
+      },
+      body: payload.toString(),
+    });
+
+    if (!res.ok) {
+      gateSay("That did not go through. Try again in a moment.", "error");
+      return;
+    }
+
+    try {
+      localStorage.setItem(GATE_KEY, new Date().toISOString());
+    } catch {
+      // Nothing to do — they will be asked again next visit.
+    }
+
+    gateSay(`Thanks. Your builds are below, ${email}.`, "ok");
+    openDownloads(true);
+  } catch {
+    gateSay("That did not go through. Check your connection and try again.", "error");
+  } finally {
+    gate.removeAttribute("data-busy");
+  }
+});
+
 /** When signups close. Also stated in the markup, so keep the two in step. */
 const DEADLINE = new Date("2026-08-03T23:59:59");
 
